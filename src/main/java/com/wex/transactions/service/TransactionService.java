@@ -1,6 +1,7 @@
 package com.wex.transactions.service;
 
 import com.wex.transactions.dto.TransactionResponse;
+import com.wex.transactions.exceptions.ExchangeRateProviderException;
 import com.wex.transactions.model.Transaction;
 import com.wex.transactions.repository.TransactionRepository;
 import org.modelmapper.ModelMapper;

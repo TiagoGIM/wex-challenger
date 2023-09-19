@@ -1,6 +1,7 @@
 package com.wex.transactions.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Transaction {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private UUID id;
 
+        @Size(min=10, max = 50, message = "Description must not exceed 50 characters.")
         @Column(nullable = false)
         private String description;
 
@@ -38,13 +40,6 @@ public class Transaction {
         @Column(nullable = false)
         private Date createdDate;
 
-        public void setDescription(String description) {
-            if (description != null && description.length() <= 50) {
-                this.description = description;
-            } else {
-                throw new IllegalArgumentException("Description must not exceed 50 characters.");
-            }
-        }
 
         public void setDate(LocalDate date) {
             if (date != null) {

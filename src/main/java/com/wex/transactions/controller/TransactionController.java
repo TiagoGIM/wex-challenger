@@ -3,6 +3,7 @@ package com.wex.transactions.controller;
 import com.wex.transactions.dto.TransactionDTO;
 import com.wex.transactions.dto.TransactionRequest;
 import com.wex.transactions.dto.TransactionResponse;
+import com.wex.transactions.exceptions.ExchangeRateProviderException;
 import com.wex.transactions.model.Transaction;
 import com.wex.transactions.service.TransactionService;
 import jakarta.validation.Valid;
@@ -13,10 +14,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/transactions")
+@RequestMapping("/api/public/transactions")
 public class TransactionController {
 
     private final TransactionService transactionService;
@@ -29,14 +32,24 @@ public class TransactionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TransactionDTO create(@RequestBody  @Valid TransactionRequest transactionRequest) {
-
+    public TransactionDTO create(@RequestBody @Valid TransactionRequest transactionRequest) {
         // Create a Transaction object from the request
-        Transaction transaction = modelMapper.map(transactionRequest , Transaction.class);
-        // Call the service to create the transaction
-        Transaction createdTransaction = transactionService.save(transaction);
+        try {
 
-        return modelMapper.map(createdTransaction , TransactionDTO.class);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate parsedDate = LocalDate.parse(transactionRequest.getDate(), formatter);
+
+            Transaction transaction = modelMapper.map(transactionRequest, Transaction.class);
+            transaction.setDate(parsedDate);
+
+            // Call the service to create the transaction
+            Transaction createdTransaction = transactionService.save(transaction);
+
+            return modelMapper.map(createdTransaction, TransactionDTO.class);
+        }catch (Exception e) {
+
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage() );
+        }
 
     }
 
@@ -46,6 +59,6 @@ public class TransactionController {
                                                  @PathVariable("id") UUID id) {
 
         return transactionService.convertedTransaction(id , currency)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction id not Found" ));
     }
 }
