@@ -2,12 +2,16 @@ package com.wex.transactions.controller;
 
 import com.wex.transactions.dto.TransactionDTO;
 import com.wex.transactions.dto.TransactionRequest;
+import com.wex.transactions.dto.TransactionResponse;
 import com.wex.transactions.model.Transaction;
 import com.wex.transactions.service.TransactionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/transactions")
@@ -32,5 +36,14 @@ public class TransactionController {
 
         return modelMapper.map(createdTransaction , TransactionDTO.class);
 
+    }
+
+    @GetMapping("/convert/{currency}/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TransactionResponse convertedPurchase(@PathVariable("currency") String currency,
+                                                 @PathVariable("id") UUID id) {
+
+        return transactionService.convertedTransaction(id , currency)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ));
     }
 }

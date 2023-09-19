@@ -4,6 +4,7 @@ import com.wex.transactions.dto.TransactionResponse;
 import com.wex.transactions.model.Transaction;
 import com.wex.transactions.repository.TransactionRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,8 +17,8 @@ public class TransactionService implements ITransactionService {
 
     private final TransactionRepository repository;
     private final ExchangeRateService exchangeRateService;
-
     private final ModelMapper modelMapper;
+    @Autowired
     public TransactionService(
             TransactionRepository repository,
             ExchangeRateService exchangeRateService,
@@ -27,7 +28,6 @@ public class TransactionService implements ITransactionService {
         this.modelMapper = modelMapper;
     }
 
-    @Override
     public Transaction save(Transaction transaction) {
         return repository.save(transaction);
     }
