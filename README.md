@@ -86,8 +86,8 @@ Feel free to use tools like Postman or curl to make API requests as well.
 
 
 
-## Acknowledgements
-
+## Acknowledgements and references
+ - [Treasury Reporting Rates of Exchange - API](https://fiscaldata.treasury.gov/api-documentation/)
  - [Spring Quickstart](https://spring.io/quickstart)
  - [Guide to Spring Boot REST API Error Handling](https://www.toptal.com/java/spring-boot-rest-api-error-handling#:~:text=ExceptionHandler%20is%20a%20Spring%20annotation,thrown%20within%20this%20controller%20only.)
  - [springdoc-openapi](https://springdoc.org/)
