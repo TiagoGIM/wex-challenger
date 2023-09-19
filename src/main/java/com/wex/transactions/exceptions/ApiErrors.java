@@ -24,7 +24,6 @@ public class ApiErrors {
     }
 
     public ApiErrors(ResponseStatusException ex) {
-        System.out.println(ex.getMessage());
         errors = Arrays.asList(ex.getReason());
     }
 
