@@ -5,9 +5,11 @@ import com.wex.transactions.dto.TransactionRequest;
 import com.wex.transactions.dto.TransactionResponse;
 import com.wex.transactions.model.Transaction;
 import com.wex.transactions.service.TransactionService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,7 +29,7 @@ public class TransactionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TransactionDTO create(@RequestBody TransactionRequest transactionRequest) {
+    public TransactionDTO create(@RequestBody  @Valid TransactionRequest transactionRequest) {
 
         // Create a Transaction object from the request
         Transaction transaction = modelMapper.map(transactionRequest , Transaction.class);

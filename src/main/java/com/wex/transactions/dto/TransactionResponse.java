@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionResponse {
-    public UUID Id;
+    public UUID id;
     private String description;
     private LocalDate date;
     private BigDecimal purchaseAmount;

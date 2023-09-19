@@ -1,7 +1,5 @@
 package com.wex.transactions.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wex.transactions.dto.TransactionDTO;
 import com.wex.transactions.dto.TransactionResponse;
 import com.wex.transactions.model.Transaction;
 import com.wex.transactions.service.TransactionService;
@@ -93,7 +91,7 @@ public class TransactionControllerTest {
 
         // Create a fake transaction response
         TransactionResponse fakeTransactionResponse = TransactionResponse.builder()
-                .Id(fakeId)
+                .id(fakeId)
                 .description("Sample Transaction")
                 .date(LocalDate.of(2023, 9, 6))
                 .purchaseAmount(BigDecimal.valueOf(19.87))
