@@ -8,12 +8,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class TransactionService implements ITransactionService {
+
+    private final TransactionRepository repository;
     public TransactionService(TransactionRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public Transaction save(Transaction transaction) {
-        return null;
+        return repository.save(transaction);
     }
 
     @Override
